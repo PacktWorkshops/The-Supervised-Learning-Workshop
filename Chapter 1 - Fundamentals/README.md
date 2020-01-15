@@ -7,3 +7,9 @@ In order to run the unittests:
  - run the following command at the prompt:  
   
 `py.test --nbval -p no:warnings`
+  
+ note: requires nbval  
+ https://github.com/computationalmodelling/nbval  
+ 
+ install from:  
+ `conda install -c conda-forge nbval`
