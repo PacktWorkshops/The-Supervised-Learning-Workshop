@@ -1,9 +1,9 @@
 # The-Supervised-Learning-Workshop
-Chapter 2 - Regression 
+Chapter 3 - Supervised Learning Algorithms Linear Regression
   
 In order to run the unittests:  
  - open a cmd/terminal prompt  
- - navigate to the Chapter 2 - Regression directory  
+ - navigate to the Chapter 3 - Supervised Learning Algorithms Linear Regression directory  
  - run the following command at the prompt:  
   
 `py.test --nbval -p no:warnings`
