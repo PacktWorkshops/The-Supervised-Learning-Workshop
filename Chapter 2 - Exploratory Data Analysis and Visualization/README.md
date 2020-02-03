@@ -3,7 +3,7 @@ Chapter 2 - Exploratory Data Analysis and Visualization
   
 In order to run the unittests:  
  - open a cmd/terminal prompt  
- - navigate to the Chapter 1 - Fundamentals directory  
+ - navigate to the Chapter 2 - Exploratory Data Analysis and Visualization directory  
  - run the following command at the prompt:  
   
 `py.test --nbval -p no:warnings`
