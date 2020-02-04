@@ -6,7 +6,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'breast-cancer-data.csv'))
+df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'breast-cancer-data.csv'))
 
 np.random.seed(10)
 samples = np.random.randint(0, len(df), 10)
@@ -29,7 +29,7 @@ class TestingExercise42(unittest.TestCase):
 
     def test_test_set_accuracy(self):
         test_accuracy = model.score(df_test[set(df_test.columns)-{'diagnosis'}], df_test.diagnosis)
-        self.assertAlmostEqual(test_accuracy, 0.9)
+        self.assertAlmostEqual(test_accuracy, 0.9, places=1)
 
 
 if __name__ == '__main__':

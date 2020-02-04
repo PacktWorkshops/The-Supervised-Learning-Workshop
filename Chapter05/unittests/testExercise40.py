@@ -6,7 +6,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'breast-cancer-data.csv'))
+df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'breast-cancer-data.csv'))
 
 labelled_diagnoses = [
     'benign',
@@ -33,9 +33,9 @@ class TestingExercise40(unittest.TestCase):
         xx, yy = np.meshgrid(mean_radius_range, worst_radius_range)  # Create the mesh
         pred_x = np.c_[xx.ravel(), yy.ravel()]
         pred_y = model.predict(pred_x).reshape(xx.shape)
-        self.assertAlmostEqual(xx[0][0], 5.981)
-        self.assertAlmostEqual(yy[0][0], 6.93)
-        self.assertAlmostEqual(pred_x[0][1], 6.93)
+        self.assertAlmostEqual(xx[0][0], 5.981, places=2)
+        self.assertAlmostEqual(yy[0][0], 6.93, places=2)
+        self.assertAlmostEqual(pred_x[0][1], 6.93, places=2)
         self.assertEqual(pred_y[0][0], 0)
 
 

@@ -8,20 +8,20 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-with gzip.open(os.path.join(ROOT_DIR, '..', 'train-images-idx3-ubyte.gz'), 'rb') as f:
+with gzip.open(os.path.join(ROOT_DIR, '..', 'Datasets', 'train-images-idx3-ubyte.gz'), 'rb') as f:
     magic, size, rows, cols = struct.unpack(">IIII", f.read(16))
     img = np.array(array("B", f.read())).reshape((size, rows, cols))
 
-with gzip.open(os.path.join(ROOT_DIR, '..', 'train-labels-idx1-ubyte.gz'), 'rb') as f:
+with gzip.open(os.path.join(ROOT_DIR, '..', 'Datasets', 'train-labels-idx1-ubyte.gz'), 'rb') as f:
     magic, size = struct.unpack(">II", f.read(8))
     labels = np.array(array("B", f.read()))
 
-with gzip.open(os.path.join(ROOT_DIR, '..', 't10k-images-idx3-ubyte.gz'), 'rb') as f:
+with gzip.open(os.path.join(ROOT_DIR, '..', 'Datasets', 't10k-images-idx3-ubyte.gz'), 'rb') as f:
     magic, size, rows, cols = struct.unpack(">IIII", f.read(16))
 
     img_test = np.array(array("B", f.read())).reshape((size, rows, cols))
 
-with gzip.open(os.path.join(ROOT_DIR, '..', 't10k-labels-idx1-ubyte.gz'), 'rb') as f:
+with gzip.open(os.path.join(ROOT_DIR, '..', 'Datasets', 't10k-labels-idx1-ubyte.gz'), 'rb') as f:
     magic, size = struct.unpack(">II", f.read(8))
     labels_test = np.array(array("B", f.read()))
 
@@ -47,13 +47,13 @@ class TestingExercise37(unittest.TestCase):
         images_0_1_test = img_test[samples_0_1_test].reshape((-1, rows * cols))
         labels_0_1_test = labels_test[samples_0_1_test]
         test_accuracy = model.score(X=images_0_1_test, y=labels_0_1_test)
-        self.assertAlmostEqual(test_accuracy, 0.99952719)
+        self.assertAlmostEqual(test_accuracy, 0.99952719, places=4)
 
     def test_predictions(self):
         pred_label = model.predict(images_0_1)[0]
         pred_proba = model.predict_proba(images_0_1)[0][0]
         self.assertEqual(pred_label, 0)
-        self.assertAlmostEqual(pred_proba, 0.99999999)
+        self.assertAlmostEqual(pred_proba, 0.99999999, places=4)
 
 
 if __name__ == '__main__':

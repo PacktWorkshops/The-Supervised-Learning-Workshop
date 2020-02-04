@@ -62,7 +62,7 @@ class TestingExercise41(unittest.TestCase):
         self.assertEqual(actual_shape, expected_shape)
 
     def test_entropy(self):
-        self.assertAlmostEqual(entropy_decision, 0.9402860)
+        self.assertAlmostEqual(entropy_decision, 0.9402860, places=4)
 
     def test_outlook_info_gain(self):
         IG_decision_Outlook = entropy_decision  # H(S)
@@ -82,27 +82,27 @@ class TestingExercise41(unittest.TestCase):
                 entropy_decision_outlook -= (num_n / num_Outlook) \
                                             * np.log2(num_n / num_Outlook)
             IG_decision_Outlook -= (num_Outlook / len(df)) * entropy_decision_outlook
-        self.assertAlmostEqual(IG_decision_Outlook, 0.24674982)
+        self.assertAlmostEqual(IG_decision_Outlook, 0.24674982, places=4)
 
     def test_individual_outlook_info_gains(self):
-        self.assertAlmostEqual(IG(df, 'Outlook', entropy_decision), 0.24674982)
-        self.assertAlmostEqual(IG(df, 'Temperature', entropy_decision), 0.02922256)
-        self.assertAlmostEqual(IG(df, 'Humidity', entropy_decision), 0.15183550)
-        self.assertAlmostEqual(IG(df, 'Windy', entropy_decision), 0.04812703)
+        self.assertAlmostEqual(IG(df, 'Outlook', entropy_decision), 0.24674982, places=4)
+        self.assertAlmostEqual(IG(df, 'Temperature', entropy_decision), 0.02922256, places=4)
+        self.assertAlmostEqual(IG(df, 'Humidity', entropy_decision), 0.15183550, places=4)
+        self.assertAlmostEqual(IG(df, 'Windy', entropy_decision), 0.04812703, places=4)
 
     def test_sunny_outlook_entropy(self):
         df_next = df.loc[df.Outlook != 'overcast']
         df_sunny = df_next.loc[df_next.Outlook == 'sunny']
         entropy_decision = f_entropy_decision(df_sunny)
-        self.assertAlmostEqual(entropy_decision, 0.97095059)
+        self.assertAlmostEqual(entropy_decision, 0.97095059, places=4)
 
     def test_sunny_outlook_info_gain(self):
         df_next = df.loc[df.Outlook != 'overcast']
         df_sunny = df_next.loc[df_next.Outlook == 'sunny']
         entropy_decision = f_entropy_decision(df_sunny)
-        self.assertAlmostEqual(IG(df_sunny, 'Temperature', entropy_decision), 0.82809345)
-        self.assertAlmostEqual(IG(df_sunny, 'Humidity', entropy_decision), 0.97095059)
-        self.assertAlmostEqual(IG(df_sunny, 'Windy', entropy_decision), 0.63131577)
+        self.assertAlmostEqual(IG(df_sunny, 'Temperature', entropy_decision), 0.82809345, places=4)
+        self.assertAlmostEqual(IG(df_sunny, 'Humidity', entropy_decision), 0.97095059, places=4)
+        self.assertAlmostEqual(IG(df_sunny, 'Windy', entropy_decision), 0.63131577, places=4)
 
 
 if __name__ == '__main__':
