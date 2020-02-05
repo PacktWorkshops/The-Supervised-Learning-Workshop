@@ -12,7 +12,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'boston_house_prices.csv'))
+data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'boston_house_prices.csv'))
 
 
 class TestingActivityBoston(unittest.TestCase):
@@ -167,16 +167,16 @@ class TestingActivityBoston(unittest.TestCase):
                                 pd.Series(val_mae_values, name='val')],
                                axis=1)
 
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['train'].values[0], 2.38440594)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['val'].values[0], 3.28235294)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['train'].values[0], 3.45554455)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['val'].values[0], 3.97803922)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['train'].values[0], 2.31612005)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['val'].values[0], 3.029828431)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['train'].values[0], 2.46343592)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['val'].values[0], 3.058634)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['train'].values[0], 2.24627884)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['val'].values[0], 2.87408434)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['train'].values[0], 2.38440594, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['val'].values[0], 3.28235294, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['train'].values[0], 3.45554455, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['val'].values[0], 3.97803922, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['train'].values[0], 2.31612005, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['val'].values[0], 3.029828431, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['train'].values[0], 2.46343592, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['val'].values[0], 3.058634, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['train'].values[0], 2.24627884, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['val'].values[0], 2.87408434, places=4)
 
 
 if __name__ == '__main__':

@@ -7,7 +7,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'breast-cancer-data.csv'))
+df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'breast-cancer-data.csv'))
 
 X, y = df[[c for c in df.columns if c != 'diagnosis']], df.diagnosis
 
@@ -42,7 +42,7 @@ class TestingActivity12(unittest.TestCase):
 
     def test_validation_accuracy(self):
         valid_accuracy = model.score(valid_X, valid_y)
-        self.assertAlmostEqual(valid_accuracy, 0.93859649)
+        self.assertAlmostEqual(valid_accuracy, 0.93859649, places=4)
 
     def test_random_feat_model_accruacy(self):
         selected_features = [
@@ -55,7 +55,7 @@ class TestingActivity12(unittest.TestCase):
         model = LogisticRegression(solver='liblinear')
         model.fit(train_X, train_y)
         valid_accuracy = model.score(valid_X, valid_y)
-        self.assertAlmostEqual(valid_accuracy, 0.88596491)
+        self.assertAlmostEqual(valid_accuracy, 0.88596491, places=4)
 
     def test_all_feats_model_accruacy(self):
         selected_features = [
@@ -66,7 +66,7 @@ class TestingActivity12(unittest.TestCase):
         model = LogisticRegression(solver='liblinear')
         model.fit(train_X, train_y)
         valid_accuracy = model.score(valid_X, valid_y)
-        self.assertAlmostEqual(valid_accuracy, 0.98245614)
+        self.assertAlmostEqual(valid_accuracy, 0.98245614, places=4)
 
 
 if __name__ == '__main__':

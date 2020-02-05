@@ -7,7 +7,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'breast-cancer-data.csv'))
+data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'breast-cancer-data.csv'))
 X = data.drop(columns=['diagnosis'])
 y = data['diagnosis'].map({'malignant': 1, 'benign': 0}.get).values
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=11)

@@ -35,7 +35,7 @@ def preprocess(data):
     return pd.concat([data[cols], embarked], axis=1).values
 
 
-data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'titanic.csv'))
+data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'titanic.csv'))
 
 train, val = train_test_split(data, test_size=0.2, random_state=11)
 
@@ -76,10 +76,10 @@ class TestingExercise36(unittest.TestCase):
         val_accuracy_dt = accuracy_score(y_true=y_val, y_pred=dt_preds_val)
         train_accuracy_bc = accuracy_score(y_true=y_train, y_pred=bc_preds_train)
         val_accuracy_bc = accuracy_score(y_true=y_val, y_pred=bc_preds_val)
-        self.assertAlmostEqual(train_accuracy_dt, 0.98314607)
-        self.assertAlmostEqual(val_accuracy_dt, 0.75977654)
-        self.assertAlmostEqual(train_accuracy_bc, 0.92837079)
-        self.assertAlmostEqual(val_accuracy_bc, 0.86033520)
+        self.assertAlmostEqual(train_accuracy_dt, 0.98314607, places=4)
+        self.assertAlmostEqual(val_accuracy_dt, 0.75977654, places=4)
+        self.assertAlmostEqual(train_accuracy_bc, 0.92837079, places=4)
+        self.assertAlmostEqual(val_accuracy_bc, 0.86033520, places=4)
 
     def test_random_forest(self):
         rf_params = {
@@ -96,8 +96,8 @@ class TestingExercise36(unittest.TestCase):
         rf_preds_val = rf.predict(x_val)
         train_accuracy = accuracy_score(y_true=y_train, y_pred=rf_preds_train)
         val_accuracy = accuracy_score(y_true=y_val, y_pred=rf_preds_val)
-        self.assertAlmostEqual(train_accuracy, 0.82303371)
-        self.assertAlmostEqual(val_accuracy, 0.86033520)
+        self.assertAlmostEqual(train_accuracy, 0.82303371, places=4)
+        self.assertAlmostEqual(val_accuracy, 0.86033520, places=4)
 
     def test_adaboost(self):
         dt_params = {
@@ -117,8 +117,8 @@ class TestingExercise36(unittest.TestCase):
         ab_preds_val = ab.predict(x_val)
         train_accuracy = accuracy_score(y_true=y_train, y_pred=ab_preds_train)
         val_accuracy = accuracy_score(y_true=y_val, y_pred=ab_preds_val)
-        self.assertAlmostEqual(train_accuracy, 0.82443820)
-        self.assertAlmostEqual(val_accuracy, 0.85474860)
+        self.assertAlmostEqual(train_accuracy, 0.82443820, places=4)
+        self.assertAlmostEqual(val_accuracy, 0.85474860, places=4)
 
     def test_gradboost(self):
         gbc_params = {
@@ -133,8 +133,8 @@ class TestingExercise36(unittest.TestCase):
         gbc_preds_val = gbc.predict(x_val)
         train_accuracy = accuracy_score(y_true=y_train, y_pred=gbc_preds_train)
         val_accuracy = accuracy_score(y_true=y_val, y_pred=gbc_preds_val)
-        self.assertAlmostEqual(train_accuracy, 0.89466292)
-        self.assertAlmostEqual(val_accuracy, 0.87709497)
+        self.assertAlmostEqual(train_accuracy, 0.89466292, places=4)
+        self.assertAlmostEqual(val_accuracy, 0.87709497, places=4)
 
     def test_stacking(self):
         x_train_with_metapreds = np.zeros((x_train.shape[0], x_train.shape[1] + 2))
@@ -180,12 +180,12 @@ class TestingExercise36(unittest.TestCase):
         val_accuracy_kn = accuracy_score(y_true=y_val, y_pred=svm_pred)
         train_accuracy_sv = accuracy_score(y_true=y_train, y_pred=knn.predict(x_train))
         val_accuracy_sv = accuracy_score(y_true=y_val, y_pred=knn_pred)
-        self.assertAlmostEqual(train_accuracy_st, 0.78651685)
-        self.assertAlmostEqual(val_accuracy_st, 0.88826816)
-        self.assertAlmostEqual(train_accuracy_kn, 0.69241573)
-        self.assertAlmostEqual(val_accuracy_kn, 0.76536313)
-        self.assertAlmostEqual(train_accuracy_sv, 0.79213483)
-        self.assertAlmostEqual(val_accuracy_sv, 0.67039106)
+        self.assertAlmostEqual(train_accuracy_st, 0.78651685, places=4)
+        self.assertAlmostEqual(val_accuracy_st, 0.88826816, places=4)
+        self.assertAlmostEqual(train_accuracy_kn, 0.69241573, places=4)
+        self.assertAlmostEqual(val_accuracy_kn, 0.76536313, places=4)
+        self.assertAlmostEqual(train_accuracy_sv, 0.79213483, places=4)
+        self.assertAlmostEqual(val_accuracy_sv, 0.67039106, places=4)
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ import os
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'breast-cancer-data.csv'))
+df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'breast-cancer-data.csv'))
 
 df_test = df.iloc[430]
 df = df.drop([430]) # Remove the sample
@@ -26,7 +26,7 @@ class TestingExercise39(unittest.TestCase):
 
     def test_validation_accuracy(self):
         actual_accuracy = model.score(X=valid_X, y=valid_y)
-        self.assertAlmostEqual(actual_accuracy, 0.93859649)
+        self.assertAlmostEqual(actual_accuracy, 0.93859649, places=4)
 
     def test_test_smaple_prediction(self):
         pred = model.predict(df_test[['mean radius', 'worst radius']].values.reshape((-1, 2)))[0]
