@@ -10,17 +10,18 @@ from sklearn.neighbors import KNeighborsRegressor
 from sklearn.ensemble import GradientBoostingRegressor, RandomForestRegressor
 import os
 
-ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'boston_house_prices.csv'))
+class TestingActivity6_01(unittest.TestCase):
+    def setUp(self) -> None:
+        ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
+        self.data = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'boston_house_prices.csv'))
 
-class TestingActivityBoston(unittest.TestCase):
     def test_dataset_shape(self):
-        self.assertEqual(data.shape, (506, 14))
+        self.assertEqual(self.data.shape, (506, 14))
 
-    def test_classifier_scores(self):
-        data_final = data.fillna(-1)
+    def test_decision_tree_scores(self):
+        data_final = self.data.fillna(-1)
         train, val = train_test_split(data_final, test_size=0.2, random_state=11)
 
         x_train = train.drop(columns=['PRICE'])
@@ -48,6 +49,25 @@ class TestingActivityBoston(unittest.TestCase):
         train_mae_values['dt'] = mean_absolute_error(y_true=y_train, y_pred=dt_preds_train)
         val_mae_values['dt'] = mean_absolute_error(y_true=y_val, y_pred=dt_preds_val)
 
+        mae_scores = pd.concat([pd.Series(train_mae_values, name='train'),
+                                pd.Series(val_mae_values, name='val')],
+                               axis=1)
+
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['train'].values[0], 2.38440594, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['val'].values[0], 3.28235294, places=4)
+
+    def test_knn_scores(self):
+        data_final = self.data.fillna(-1)
+        train, val = train_test_split(data_final, test_size=0.2, random_state=11)
+
+        x_train = train.drop(columns=['PRICE'])
+        y_train = train['PRICE'].values
+
+        x_val = val.drop(columns=['PRICE'])
+        y_val = val['PRICE'].values
+
+        train_mae_values, val_mae_values = {}, {}
+
         # k-Nearest Neighbours
 
         knn_params = {
@@ -62,6 +82,25 @@ class TestingActivityBoston(unittest.TestCase):
 
         train_mae_values['knn'] = mean_absolute_error(y_true=y_train, y_pred=knn_preds_train)
         val_mae_values['knn'] = mean_absolute_error(y_true=y_val, y_pred=knn_preds_val)
+
+        mae_scores = pd.concat([pd.Series(train_mae_values, name='train'),
+                                pd.Series(val_mae_values, name='val')],
+                               axis=1)
+
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['train'].values[0], 3.45554455, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['val'].values[0], 3.97803922, places=4)
+
+    def test_random_forest_scores(self):
+        data_final = self.data.fillna(-1)
+        train, val = train_test_split(data_final, test_size=0.2, random_state=11)
+
+        x_train = train.drop(columns=['PRICE'])
+        y_train = train['PRICE'].values
+
+        x_val = val.drop(columns=['PRICE'])
+        y_val = val['PRICE'].values
+
+        train_mae_values, val_mae_values = {}, {}
 
         # Random Forest
 
@@ -83,6 +122,25 @@ class TestingActivityBoston(unittest.TestCase):
         train_mae_values['rf'] = mean_absolute_error(y_true=y_train, y_pred=rf_preds_train)
         val_mae_values['rf'] = mean_absolute_error(y_true=y_val, y_pred=rf_preds_val)
 
+        mae_scores = pd.concat([pd.Series(train_mae_values, name='train'),
+                                pd.Series(val_mae_values, name='val')],
+                               axis=1)
+
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['train'].values[0], 2.31612005, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['val'].values[0], 3.029828431, places=4)
+
+    def test_gradient_boosting_scores(self):
+        data_final = self.data.fillna(-1)
+        train, val = train_test_split(data_final, test_size=0.2, random_state=11)
+
+        x_train = train.drop(columns=['PRICE'])
+        y_train = train['PRICE'].values
+
+        x_val = val.drop(columns=['PRICE'])
+        y_val = val['PRICE'].values
+
+        train_mae_values, val_mae_values = {}, {}
+
         # Gradient Boosting
 
         gbr_params = {
@@ -103,9 +161,64 @@ class TestingActivityBoston(unittest.TestCase):
         train_mae_values['gbr'] = mean_absolute_error(y_true=y_train, y_pred=gbr_preds_train)
         val_mae_values['gbr'] = mean_absolute_error(y_true=y_val, y_pred=gbr_preds_val)
 
+        mae_scores = pd.concat([pd.Series(train_mae_values, name='train'),
+                                pd.Series(val_mae_values, name='val')],
+                               axis=1)
+
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['train'].values[0], 2.46343592, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['val'].values[0], 3.058634, places=4)
+
+    def test_stacking_model_scores(self):
+        data_final = self.data.fillna(-1)
+        train, val = train_test_split(data_final, test_size=0.2, random_state=11)
+
+        x_train = train.drop(columns=['PRICE'])
+        y_train = train['PRICE'].values
+
+        x_val = val.drop(columns=['PRICE'])
+        y_val = val['PRICE'].values
+
+        train_mae_values, val_mae_values = {}, {}
+
+        # Decision Tree
+
+        dt_params = {
+            'criterion': 'mae',
+            'min_samples_leaf': 15,
+            'random_state': 11
+        }
+
+        # k-Nearest Neighbours
+
+        knn_params = {
+            'n_neighbors': 5
+        }
+
+        # Random Forest
+
+        rf_params = {
+            'n_estimators': 20,
+            'criterion': 'mae',
+            'max_features': 'sqrt',
+            'min_samples_leaf': 10,
+            'random_state': 11,
+            'n_jobs': -1
+        }
+
+        # Gradient Boosting
+
+        gbr_params = {
+            'n_estimators': 20,
+            'criterion': 'mae',
+            'max_features': 'sqrt',
+            'max_depth': 3,
+            'min_samples_leaf': 10,
+            'random_state': 11
+        }
+
         # stacking model
 
-        num_base_predictors = len(train_mae_values)  # 4
+        num_base_predictors = 4
 
         x_train_with_metapreds = np.zeros((x_train.shape[0], x_train.shape[1] + num_base_predictors))
         x_train_with_metapreds[:, :-num_base_predictors] = x_train
@@ -167,16 +280,8 @@ class TestingActivityBoston(unittest.TestCase):
                                 pd.Series(val_mae_values, name='val')],
                                axis=1)
 
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['train'].values[0], 2.38440594, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'dt']['val'].values[0], 3.28235294, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['train'].values[0], 3.45554455, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'knn']['val'].values[0], 3.97803922, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['train'].values[0], 2.31612005, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'rf']['val'].values[0], 3.029828431, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['train'].values[0], 2.46343592, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'gbr']['val'].values[0], 3.058634, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['train'].values[0], 2.24627884, places=4)
-        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['val'].values[0], 2.87408434, places=4)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['train'].values[0], 2.24627884, places=2)
+        self.assertAlmostEqual(mae_scores[mae_scores.index == 'lr']['val'].values[0], 2.87408434, places=2)
 
 
 if __name__ == '__main__':
