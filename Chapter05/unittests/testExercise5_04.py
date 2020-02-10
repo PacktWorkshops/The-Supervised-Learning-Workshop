@@ -1,45 +1,74 @@
 import unittest
 import pandas as pd
-from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.linear_model import LogisticRegression
+from sklearn.feature_selection import SelectKBest
 from sklearn.model_selection import train_test_split
 import os
 
 
-class TestingExercise5_04(unittest.TestCase):
+class TestingActivity5_04(unittest.TestCase):
     def setUp(self) -> None:
         ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
         self.df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'breast-cancer-data.csv'))
 
-        self.df_test = self.df.iloc[430]
-        self.df = self.df.drop([430])  # Remove the sample
+        X, y = self.df[[c for c in self.df.columns if c != 'diagnosis']], self.df.diagnosis
 
-        self.train_X, self.valid_X, self.train_y, self.valid_y = train_test_split(self.df[['mean radius',
-                                                                                           'worst radius']],
-                                                                                  self.df.diagnosis, test_size=0.2,
+        skb_model = SelectKBest(k=2)
+        X_new = skb_model.fit_transform(X, y)
+
+        # get the k - best column names
+        mask = skb_model.get_support()  # list of booleans
+        self.selected_features = []  # The list of your K best features
+
+        for bool, feature in zip(mask, self.df.columns):
+            if bool:
+                self.selected_features.append(feature)
+
+        diagnoses = [
+            'benign',  # 0
+            'malignant',  # 1
+        ]
+        self.output = [diagnoses.index(diag) for diag in self.df.diagnosis]
+
+        self.train_X, self.valid_X, self.train_y, self.valid_y = train_test_split(self.df[self.selected_features],
+                                                                                  self.output, test_size=0.2,
                                                                                   random_state=123)
 
-        self.model = KNN(n_neighbors=3)
-        self.model.fit(X=self.train_X, y=self.train_y)
+        self.model = LogisticRegression(solver='liblinear')
+        self.model.fit(self.train_X, self.train_y)
 
-    def test_dataframe_shape(self):
-        expected_shape = (568, 31)
-        actual_shape = self.df.shape
-        self.assertEqual(actual_shape, expected_shape)
+    def test_best_features(self):
+        self.assertEqual(self.selected_features[0], 'worst perimeter')
+        self.assertEqual(self.selected_features[1], 'worst concave points')
 
     def test_validation_accuracy(self):
-        actual_accuracy = self.model.score(X=self.valid_X, y=self.valid_y)
-        self.assertAlmostEqual(actual_accuracy, 0.93859649, places=4)
+        valid_accuracy = self.model.score(self.valid_X, self.valid_y)
+        self.assertAlmostEqual(valid_accuracy, 0.93859649, places=4)
 
-    def test_train_accuracy(self):
-        actual_accuracy = self.model.score(X=self.train_X, y=self.train_y)
-        self.assertAlmostEqual(actual_accuracy, 0.93832599, places=4)
+    def test_random_feat_model_accruacy(self):
+        selected_features = [
+            'mean radius',  # List features here
+            'mean texture',
+            'compactness error'
+        ]
+        train_X, valid_X, train_y, valid_y = train_test_split(self.df[selected_features], self.output,
+                                                              test_size=0.2, random_state=123)
+        model = LogisticRegression(solver='liblinear')
+        model.fit(train_X, train_y)
+        valid_accuracy = model.score(valid_X, valid_y)
+        self.assertAlmostEqual(valid_accuracy, 0.88596491, places=4)
 
-    def test_test_smaple_prediction(self):
-        pred = self.model.predict(self.df_test[['mean radius', 'worst radius']].values.reshape((-1, 2)))[0]
-        truth = self.df_test.diagnosis
-        self.assertEqual(pred, 'benign')
-        self.assertEqual(truth, 'malignant')
+    def test_all_feats_model_accruacy(self):
+        selected_features = [
+            feat for feat in self.df.columns if feat != 'diagnosis'  # List features here
+        ]
+        train_X, valid_X, train_y, valid_y = train_test_split(self.df[selected_features], self.output,
+                                                              test_size=0.2, random_state=123)
+        model = LogisticRegression(solver='liblinear')
+        model.fit(train_X, train_y)
+        valid_accuracy = model.score(valid_X, valid_y)
+        self.assertAlmostEqual(valid_accuracy, 0.98245614, places=4)
 
 
 if __name__ == '__main__':
