@@ -2,12 +2,12 @@ import unittest
 import struct
 import numpy as np
 import gzip
-from array import array
-from sklearn.neighbors import KNeighborsClassifier as KNN
 import os
+from array import array
+from sklearn.tree import DecisionTreeClassifier
 
 
-class TestingActivity5_03(unittest.TestCase):
+class TestingExercise5_02(unittest.TestCase):
     def setUp(self) -> None:
         ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
@@ -28,25 +28,33 @@ class TestingActivity5_03(unittest.TestCase):
             magic, size = struct.unpack(">II", f.read(8))
             self.labels_test = np.array(array("B", f.read()))
 
-        np.random.seed(0)  # Give consistent random numbers
-        selection = np.random.choice(len(img), 5000)
-        self.selected_images = img[selection].reshape((-1, rows * cols))
-        self.selected_labels = labels[selection]
+        samples_0_1 = np.where((labels == 0) | (labels == 1))[0]
+        self.images_0_1 = img[samples_0_1].reshape((-1, rows * cols))
+        self.labels_0_1 = labels[samples_0_1]
 
-        self.model = KNN(n_neighbors=3)
-        self.model.fit(X=self.selected_images, y=self.selected_labels)
+        self.model = DecisionTreeClassifier(random_state=123)
+        self.model.fit(X=self.images_0_1, y=self.labels_0_1)
 
     def test_dimensions(self):
-        self.assertEqual(self.selected_images.shape, (5000, 784))
-        self.assertEqual(self.selected_labels.shape, (5000,))
+        self.assertEqual(self.images_0_1.shape, (12665, 784))
+        self.assertEqual(self.labels_0_1.shape, (12665,))
 
-    def test_knn_train_accuracy(self):
-        train_accuracy = self.model.score(X=self.selected_images, y=self.selected_labels)
-        self.assertAlmostEqual(train_accuracy, 0.9712, places=2)
+    def test_dt_train_accuracy(self):
+        train_accuracy = self.model.score(X=self.images_0_1, y=self.labels_0_1)
+        self.assertEqual(train_accuracy, 1)
 
-    def test_knn_test_accuracy(self):
-        test_accuracy = self.model.score(X=self.img_test.reshape((-1, self.rows * self.cols)), y=self.labels_test)
-        self.assertAlmostEqual(test_accuracy, 0.9346, places=2)
+    def test_dt_test_accuracy(self):
+        samples_0_1_test = np.where((self.labels_test == 0) | (self.labels_test == 1))
+        images_0_1_test = self.img_test[samples_0_1_test].reshape((-1, self.rows * self.cols))
+        labels_0_1_test = self.labels_test[samples_0_1_test]
+        test_accuracy = self.model.score(X=images_0_1_test, y=labels_0_1_test)
+        self.assertAlmostEqual(test_accuracy, 0.99621749, places=4)
+
+    def test_predictions(self):
+        pred_label = self.model.predict(self.images_0_1)[0]
+        pred_proba = self.model.predict_proba(self.images_0_1)[0][0]
+        self.assertEqual(pred_label, 0)
+        self.assertAlmostEqual(pred_proba, 0.99999999, places=4)
 
 
 if __name__ == '__main__':

@@ -1,6 +1,8 @@
 import unittest
-import pandas as pd
 import numpy as np
+import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier as KNN
+from sklearn.model_selection import train_test_split
 import os
 
 
@@ -8,101 +10,51 @@ class TestingExercise5_06(unittest.TestCase):
     def setUp(self) -> None:
         ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-        self.df = pd.DataFrame()
-        self.df['Outlook'] = [
-            'sunny', 'sunny', 'overcast', 'rain', 'rain', 'rain',
-            'overcast', 'sunny', 'sunny', 'rain', 'sunny',
-            'overcast', 'overcast', 'rain'
-        ]
-        self.df['Temperature'] = [
-            'hot', 'hot', 'hot', 'mild', 'cool', 'cool', 'cool',
-            'mild', 'cool', 'mild', 'mild', 'mild', 'hot', 'mild',
-        ]
-        self.df['Humidity'] = [
-            'high', 'high', 'high', 'high', 'normal', 'normal', 'normal',
-            'high', 'normal', 'normal', 'normal', 'high', 'normal', 'high'
-        ]
-        self.df['Windy'] = [
-            'Weak', 'Strong', 'Weak', 'Weak', 'Weak', 'Strong', 'Strong', 'Weak', 'Weak', 'Weak',
-            'Strong', 'Strong', 'Weak', 'Strong'
-        ]
-        self.df['Decision'] = [
-            'N', 'N', 'P', 'P', 'P', 'N', 'P', 'N', 'P', 'P',
-            'P', 'P', 'P', 'N'
+        self.df = pd.read_csv(os.path.join(ROOT_DIR, '..', 'Datasets', 'breast-cancer-data.csv'))
+
+        labelled_diagnoses = [
+            'benign',
+            'malignant',
         ]
 
-        # Probability of P
-        p_p = len(self.df.loc[self.df.Decision == 'P']) / len(self.df)
-        # Probability of N
-        p_n = len(self.df.loc[self.df.Decision == 'N']) / len(self.df)
-        self.entropy_decision = -p_n * np.log2(p_n) - p_p * np.log2(p_p)
+        for idx, label in enumerate(labelled_diagnoses):
+            self.df.diagnosis = self.df.diagnosis.replace(label, idx)
 
-    def IG(self, data, column, ent_decision):
-        IG_decision = ent_decision
-        for name, temp in data.groupby(column):
-            p_p = len(temp.loc[temp.Decision == 'P']) / len(temp)
-            p_n = len(temp.loc[temp.Decision != 'P']) / len(temp)
-            entropy_decision = 0
-            if p_p != 0:
-                entropy_decision -= (p_p) * np.log2(p_p)
-            if p_n != 0:
-                entropy_decision -= (p_n) * np.log2(p_n)
-            IG_decision -= (len(temp) / len(self.df)) * entropy_decision
-        return IG_decision
+        self.train_X, self.valid_X, self.train_y, self.valid_y = train_test_split(self.df[['mean radius', 'worst radius']],
+                                                              self.df.diagnosis,
+                                                              test_size=0.2, random_state=123)
 
-    @staticmethod
-    def f_entropy_decision(data):
-        p_p = len(data.loc[data.Decision == 'P']) / len(data)
-        p_n = len(data.loc[data.Decision == 'N']) / len(data)
-        return -p_n * np.log2(p_n) - p_p * np.log2(p_p)
+        self.model = KNN(n_neighbors=3)
+        self.model.fit(X=self.train_X[['mean radius', 'worst radius']], y=self.train_y)
 
     def test_dataframe_shape(self):
-        expected_shape = (14, 5)
+        expected_shape = (569, 31)
         actual_shape = self.df.shape
         self.assertEqual(actual_shape, expected_shape)
 
-    def test_entropy(self):
-        self.assertAlmostEqual(self.entropy_decision, 0.9402860, places=4)
+    def test_meshgrid_values(self):
+        spacing = 0.1
+        mean_radius_range = np.arange(self.df['mean radius'].min() - 1, self.df['mean radius'].max() + 1, spacing)
+        worst_radius_range = np.arange(self.df['worst radius'].min() - 1, self.df['worst radius'].max() + 1, spacing)
+        xx, yy = np.meshgrid(mean_radius_range, worst_radius_range)  # Create the mesh
+        self.assertAlmostEqual(xx[0][0], 5.981, places=2)
+        self.assertAlmostEqual(yy[0][0], 6.93, places=2)
 
-    def test_outlook_info_gain(self):
-        IG_decision_Outlook = self.entropy_decision  # H(S)
-        # Iterate through the values for outlook and compute the probabilities
-        # and entropy values
-        for name, Outlook in self.df.groupby('Outlook'):
-            num_p = len(Outlook.loc[Outlook.Decision == 'P'])
-            num_n = len(Outlook.loc[Outlook.Decision != 'P'])
-            num_Outlook = len(Outlook)
-            entropy_decision_outlook = 0
-            # Cannot compute log of 0 so add checks
-            if num_p != 0:
-                entropy_decision_outlook -= (num_p / num_Outlook) \
-                                            * np.log2(num_p / num_Outlook)
-            # Cannot compute log of 0 so add checks
-            if num_n != 0:
-                entropy_decision_outlook -= (num_n / num_Outlook) \
-                                            * np.log2(num_n / num_Outlook)
-            IG_decision_Outlook -= (num_Outlook / len(self.df)) * entropy_decision_outlook
-        self.assertAlmostEqual(IG_decision_Outlook, 0.24674982, places=4)
+    def test_predictions(self):
+        spacing = 0.1
+        mean_radius_range = np.arange(self.df['mean radius'].min() - 1, self.df['mean radius'].max() + 1, spacing)
+        worst_radius_range = np.arange(self.df['worst radius'].min() - 1, self.df['worst radius'].max() + 1, spacing)
+        xx, yy = np.meshgrid(mean_radius_range, worst_radius_range)  # Create the mesh
+        pred_x = np.c_[xx.ravel(), yy.ravel()]
+        pred_y = self.model.predict(pred_x).reshape(xx.shape)
+        self.assertAlmostEqual(pred_x[0][1], 6.93, places=2)
+        self.assertEqual(pred_y[0][0], 0)
 
-    def test_individual_outlook_info_gains(self):
-        self.assertAlmostEqual(self.IG(self.df, 'Outlook', self.entropy_decision), 0.24674982, places=4)
-        self.assertAlmostEqual(self.IG(self.df, 'Temperature', self.entropy_decision), 0.02922256, places=4)
-        self.assertAlmostEqual(self.IG(self.df, 'Humidity', self.entropy_decision), 0.15183550, places=4)
-        self.assertAlmostEqual(self.IG(self.df, 'Windy', self.entropy_decision), 0.04812703, places=4)
+    def test_validation_accuracy(self):
+        self.assertAlmostEqual(self.model.score(X=self.valid_X, y=self.valid_y), 0.921052632, places=2)
 
-    def test_sunny_outlook_entropy(self):
-        df_next = self.df.loc[self.df.Outlook != 'overcast']
-        df_sunny = df_next.loc[df_next.Outlook == 'sunny']
-        entropy_decision = self.f_entropy_decision(df_sunny)
-        self.assertAlmostEqual(entropy_decision, 0.97095059, places=4)
-
-    def test_sunny_outlook_info_gain(self):
-        df_next = self.df.loc[self.df.Outlook != 'overcast']
-        df_sunny = df_next.loc[df_next.Outlook == 'sunny']
-        entropy_decision = self.f_entropy_decision(df_sunny)
-        self.assertAlmostEqual(self.IG(df_sunny, 'Temperature', entropy_decision), 0.82809345, places=4)
-        self.assertAlmostEqual(self.IG(df_sunny, 'Humidity', entropy_decision), 0.97095059, places=4)
-        self.assertAlmostEqual(self.IG(df_sunny, 'Windy', entropy_decision), 0.63131577, places=4)
+    def test_train_accuracy(self):
+        self.assertAlmostEqual(self.model.score(X=self.train_X, y=self.train_y), 0.934065934, places=2)
 
 
 if __name__ == '__main__':
