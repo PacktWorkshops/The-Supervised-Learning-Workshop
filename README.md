@@ -14,7 +14,7 @@ To get started with the project files, you'll need to:
 1. Install Jupyter on [Windows](https://www.python.org/downloads/windows/), [Mac](https://www.python.org/downloads/mac-osx/), [Linux](https://www.python.org/downloads/source/)
 2. Install Anaconda on [Windows](https://www.anaconda.com/distribution/#windows), [Mac](https://www.anaconda.com/distribution/#macos), [Linux](https://www.anaconda.com/distribution/#linux)
 
-## About The Data Visualization Workshop
+## About The Supervised Learning Workshop
 You already know you want to understand supervised learning, and a smarter way to do that is to learn by doing. [The Supervised Learning Workshop](https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop) focuses on building up your practical skills so that you can deploy and build solutions that leverage key supervised learning algorithms. You'll learn from real examples that lead to real results. 
 
 ## What you will learn
