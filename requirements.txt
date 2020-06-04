@@ -1,4 +1,4 @@
-graphviz==0.1.4
+graphviz==0.2
 matplotlib==2.2.3
 missingno==0.4.2
 numpy==1.17.4
