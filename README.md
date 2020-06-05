@@ -1,4 +1,5 @@
 # The Supervised Learning Workshop
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/PacktWorkshops/The-Supervised-Learning-Workshop/Binder)
 [![GitHub issues](https://img.shields.io/github/issues/PacktWorkshops/The-Supervised-Learning-Workshop.svg)](https://github.com/PacktWorkshops/The-Supervised-Learning-Workshop/issues)
 [![GitHub forks](https://img.shields.io/github/forks/PacktWorkshops/The-Supervised-Learning-Workshop.svg)](https://github.com/PacktWorkshops/The-Supervised-Learning-Workshop/network)
 [![GitHub stars](https://img.shields.io/github/stars/PacktWorkshops/The-Supervised-Learning-Workshop.svg)](https://github.com/PacktWorkshops/The-Supervised-Learning-Workshop/stargazers)
