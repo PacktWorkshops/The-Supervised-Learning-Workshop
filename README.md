@@ -20,9 +20,12 @@ Would you like to understand how and why machine learning techniques and data an
 Although the real-world applications may seem complex, [The Supervised Learning Workshop](https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop) simplifies supervised learning for beginners with a step-by-step interactive approach. Working with real-time datasets, you’ll learn how supervised learning, when used with Python, can produce efficient predictive models.  
 
 ## What you will learn
-* Explore the fundamentals of supervised machine learning and its applications 
-* Learn how to label and process data correctly using Python libraries 
-* Gain a comprehensive overview of different machine learning algorithms used for building prediction models 
+* Import NumPy and pandas libraries to assess the data in a Jupyter Notebook 
+* Discover patterns within a dataset using exploratory data analysis 
+* Use pandas to find the summary statistics of a dataset 
+* Improve the performance of a model with linear regression analysis 
+* Increase the prediction accuracy with decision trees such as k-nearest neighbor (KNN) models 
+* Plot precision-recall and ROC curves to evaluate model performance 
 
 ## Related Workshops
 If you've found this repository useful, you might want to check out some of our other workshop titles:
