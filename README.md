@@ -15,7 +15,8 @@ To get started with the project files, you'll need to:
 2. Install Anaconda on [Windows](https://www.anaconda.com/distribution/#windows), [Mac](https://www.anaconda.com/distribution/#macos), [Linux](https://www.anaconda.com/distribution/#linux)
 
 ## About The Supervised Learning Workshop
-Would you like to understand how and why machine learning techniques and data analytics are spearheading enterprises globally?  From analyzing bioinformatics to predicting climate change, machine learning plays an increasingly pivotal role in our society.  
+Would you like to understand how and why machine learning techniques and data analytics are spearheading enterprises globally?  From analyzing bioinformatics to predicting climate change, machine learning plays an increasingly pivotal role in our society. 
+
 Although the real-world applications may seem complex, [The Supervised Learning Workshop](https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop) simplifies supervised learning for beginners with a step-by-step interactive approach. Working with real-time datasets, you’ll learn how supervised learning, when used with Python, can produce efficient predictive models.  
 
 ## What you will learn
