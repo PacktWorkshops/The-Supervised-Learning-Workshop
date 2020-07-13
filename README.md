@@ -8,7 +8,7 @@
 This is the repository for [The Supervised Learning Workshop](https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the course from start to finish.
 
 ## Requirements and Setup
-<a href="https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop"><img src="https://github.com/PacktWorkshops/Workshop-Covers/blob/master/B15922_The%20Supervised%20Learning%20Workshop.png" alt="The Supervised Learning Workshop" height="380px" width="260px" align="right" this.target="_blank"></a>
+<a href="https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop"><img src="https://github.com/PacktWorkshops/Workshop-Covers/blob/master/B15922_The%20Supervised%20Learning%20Workshop.png" alt="The Supervised Learning Workshop" height="370px" width="250px" align="right" this.target="_blank"></a>
 
 To get started with the project files, you'll need to:
 1. Install Jupyter on [Windows](https://www.python.org/downloads/windows/), [Mac](https://www.python.org/downloads/mac-osx/), [Linux](https://www.python.org/downloads/source/)
