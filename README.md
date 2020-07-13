@@ -8,22 +8,20 @@
 This is the repository for [The Supervised Learning Workshop](https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop), published by [Packt](https://www.packtpub.com/?utm_source=github). It contains all the supporting project files necessary to work through the course from start to finish.
 
 ## Requirements and Setup
-<a href="https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop"><img src="https://github.com/PacktWorkshops/Workshop-Covers/blob/master/The%20Supervised%20Learning%20Workshop.png" alt="The Supervised Learning Workshop" height="270px" width="220px" align="right" this.target="_blank"></a>
+<a href="https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop"><img src="https://github.com/PacktWorkshops/Workshop-Covers/blob/master/B15922_The%20Supervised%20Learning%20Workshop.png" alt="The Supervised Learning Workshop" height="270px" width="220px" align="right" this.target="_blank"></a>
 
 To get started with the project files, you'll need to:
 1. Install Jupyter on [Windows](https://www.python.org/downloads/windows/), [Mac](https://www.python.org/downloads/mac-osx/), [Linux](https://www.python.org/downloads/source/)
 2. Install Anaconda on [Windows](https://www.anaconda.com/distribution/#windows), [Mac](https://www.anaconda.com/distribution/#macos), [Linux](https://www.anaconda.com/distribution/#linux)
 
 ## About The Supervised Learning Workshop
-You already know you want to understand supervised learning, and a smarter way to do that is to learn by doing. [The Supervised Learning Workshop](https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop) focuses on building up your practical skills so that you can deploy and build solutions that leverage key supervised learning algorithms. You'll learn from real examples that lead to real results. 
+Would you like to understand how and why machine learning techniques and data analytics are spearheading enterprises globally?  From analyzing bioinformatics to predicting climate change, machine learning plays an increasingly pivotal role in our society.  
+Although the real-world applications may seem complex, [The Supervised Learning Workshop](https://courses.packtpub.com/courses/supervised-learning?utm_source=github&utm_medium=repository&utm_campaign=9781800209046&utm_term=Supervised%20Learning&utm_content=The%20Supervised%20Learning%20Workshop) simplifies supervised learning for beginners with a step-by-step interactive approach. Working with real-time datasets, you’ll learn how supervised learning, when used with Python, can produce efficient predictive models.  
 
 ## What you will learn
-* Get to grips with the fundamental of supervised learning algorithms
-* Discover how to use Python libraries for supervised learning
-* Learn how to load dataset in pandas for testing
-* Use different types of plots to visually represent the data
-* Distinguish between regression and classification problems
-* Learn how to perform classification using K-NN and decision trees
+* Explore the fundamentals of supervised machine learning and its applications 
+* Learn how to label and process data correctly using Python libraries 
+* Gain a comprehensive overview of different machine learning algorithms used for building prediction models 
 
 ## Related Workshops
 If you've found this repository useful, you might want to check out some of our other workshop titles:
